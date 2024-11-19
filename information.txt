@@ -1,0 +1,2 @@
+Text-Utils>npm install                 (node_modules Install)
+Text-Utils>npm start                   (Start Project)

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-export default function TextForm({heading = "Enter a Heading"}) {
+export default function TextForm({heading = "Enter a Heading", mode='', toggleMode=''}) {
     const upperCaseClick = ()=> {
         setText(Text.toUpperCase());
     };
@@ -22,6 +22,10 @@ export default function TextForm({heading = "Enter a Heading"}) {
     const reverseClick = ()=> {
         setText(Text.split('').reverse().join(''))
     };
+    const removeSpaceClick = ()=> {
+        let newText= Text.split(/[ ]+/);
+        setText(newText.join(" "));
+    };
     const clickOnChange = (event)=> {
         setText(event.target.value);
     };
@@ -34,14 +38,15 @@ export default function TextForm({heading = "Enter a Heading"}) {
                 Text copied to clipboard!
             </div>
         )}
-        <div className="container my-3">
+        <div className={`container my-3 text-${mode==='light'?'dark':'light'}`}>
             <h3>{heading}</h3>
-            <textarea className="form-control" id="exampleFormControlTextarea1" placeholder='Enter Text Here' value={Text} onChange={clickOnChange} rows="8"></textarea>
+            <textarea className={`form-control ${mode === 'dark' ? 'dark-placeholder' : ''}`} id="exampleFormControlTextarea1" style={{backgroundColor : mode==='dark'?'#030137':'white',color: mode === 'dark' ? 'white' : 'black'}} placeholder='Enter Text Here' value={Text} onChange={clickOnChange} rows="8"></textarea>
             <div className='container my-2'>
                 <button className='btn btn-primary mx-1' onClick={upperCaseClick}>Text Upper Case</button>
                 <button className='btn btn-primary mx-1' onClick={lowerCaseClick}>Text Lower Case</button>
                 <button className='btn btn-primary mx-1' onClick={titleClick}>Text Title</button>
-                <button className='btn btn-primary mx-1' onClick={reverseClick}>Text Reverse </button>
+                <button className='btn btn-primary mx-1' onClick={reverseClick}>Text Reverse</button>
+                <button className='btn btn-primary mx-1' onClick={removeSpaceClick}>Remove Extra Spaces</button>
                 <button className='btn btn-primary mx-1' onClick={clearClick}>Clear Text</button>
                 <button className='btn btn-primary mx-1' onClick={copyClick}>Copy Text</button>
             </div>
@@ -50,7 +55,7 @@ export default function TextForm({heading = "Enter a Heading"}) {
                 <p>Words: {Text.trim().length > 0 ? Text.trim().split(/\s+/).length : 0} and Characters: {Text.trim().length}</p>
                 <p>Your text read time is {Text.trim().length > 0 ? (0.008 * Text.trim().split(/\s+/).length).toFixed(2) : 0} Minutes</p>   
                 <h3>Preview</h3>
-                <p>{Text}</p>
+                <p>{Text.length>0?Text:'Enter The Text'}</p>
             </div>
         </div>
     </>

@@ -1,0 +1,7 @@
+textarea::placeholder {
+    color: black;
+}
+
+textarea.dark-placeholder::placeholder {
+    color: white;
+}
